@@ -164,10 +164,10 @@ Git
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/data-analytics-python-portfolio.git
+git clone https://github.com/saayeeem/Data_Analytics_Python.git
 
 # Navigate to project directory
-cd data-analytics-python-portfolio
+cd Data_Analytics_Python
 
 # Install required packages
 pip install -r requirements.txt
