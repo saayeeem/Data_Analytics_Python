@@ -13,7 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Pull LFS files
+    - name: Install Git LFS
+      run: git lfs install
+
+    - name: Fetch Git LFS files
       run: git lfs pull
 
     - name: Set up Python
@@ -34,6 +37,14 @@ jobs:
         pip install --upgrade pip
         pip install notebook==7.0.6 pandas matplotlib numpy plotly scikit-learn
 
+    - name: Validate notebooks
+      run: |
+        set -e
+        for notebook in $(find . -name "*.ipynb"); do
+          python -c "import json; json.load(open('$notebook'))" || \
+          echo "Invalid JSON in $notebook" && exit 1
+        done
+
     - name: Clean output directory
       run: rm -rf converted_html && mkdir -p converted_html
 
@@ -43,9 +54,6 @@ jobs:
         for notebook in $(find . -name "*.ipynb"); do
           jupyter nbconvert --to html "$notebook" --output-dir=converted_html
         done
-
-    - name: Copy custom homepage to output
-      run: cp index.html converted_html/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
