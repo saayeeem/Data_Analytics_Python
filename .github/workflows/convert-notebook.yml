@@ -43,8 +43,10 @@ jobs:
       run: |
         set -e
         FAILED=0
-        for notebook in $(find . -name "*.ipynb"); do
-          python -c "import json; json.load(open('$notebook'))" || { echo "Invalid JSON in $notebook"; FAILED=1; }
+        for notebook in $(find . -name "*.ipynb" 2>/dev/null); do
+          if [ -f "$notebook" ]; then
+            python -c "import json; json.load(open('$notebook'))" || { echo "Invalid JSON in $notebook"; FAILED=1; }
+          fi
         done
         exit $FAILED
 
@@ -54,8 +56,10 @@ jobs:
     - name: Convert all notebooks to HTML
       run: |
         set -e
-        for notebook in $(find . -name "*.ipynb"); do
-          jupyter nbconvert --to html "$notebook" --output-dir=converted_html
+        for notebook in $(find . -name "*.ipynb" 2>/dev/null); do
+          if [ -f "$notebook" ]; then
+            jupyter nbconvert --to html "$notebook" --output-dir=converted_html
+          fi
         done
 
     - name: Deploy to GitHub Pages
