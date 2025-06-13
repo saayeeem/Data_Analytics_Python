@@ -42,10 +42,11 @@ jobs:
     - name: Validate notebooks
       run: |
         set -e
+        FAILED=0
         for notebook in $(find . -name "*.ipynb"); do
-          python -c "import json; json.load(open('$notebook'))" || \
-          echo "Invalid JSON in $notebook" && exit 1
+          python -c "import json; json.load(open('$notebook'))" || { echo "Invalid JSON in $notebook"; FAILED=1; }
         done
+        exit $FAILED
 
     - name: Clean output directory
       run: rm -rf converted_html && mkdir -p converted_html
