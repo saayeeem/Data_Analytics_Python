@@ -1,4 +1,4 @@
-name: Convert Jupyter Notebook to HTML
+name: Convert Jupyter Notebook to HTML and Deploy to GitHub Pages
 
 on:
   push:
@@ -16,19 +16,34 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.10'
 
-    - name: Install Jupyter
-      run: pip install notebook
+    - name: Cache pip
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install notebook==7.0.6 pandas matplotlib numpy plotly scikit-learn
+
+    - name: Clean output directory
+      run: rm -rf converted_html && mkdir -p converted_html
 
     - name: Convert all notebooks to HTML
       run: |
+        set -e
         for notebook in $(find . -name "*.ipynb"); do
-          jupyter nbconvert --to html "$notebook"
+          jupyter nbconvert --to html "$notebook" --output-dir=converted_html
         done
 
-    - name: Upload HTML files as artifacts
-      uses: actions/upload-artifact@v4
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
       with:
-        name: html-notebooks
-        path: '**/*.html'
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./converted_html
+        force_orphan: true
