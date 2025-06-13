@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Analytics Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    // Simple dark mode toggle
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : '');
+    }
+    window.onload = function() {
+      if(localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Sticky Navbar -->
+  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-gray-800/90 shadow flex items-center justify-between px-6 py-3 mb-8">
+    <div class="flex items-center gap-4">
+      <span class="font-bold text-xl">📊 Portfolio</span>
+      <a href="#projects" class="hover:underline">Projects</a>
+      <a href="#about" class="hover:underline">About</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleDarkMode()" class="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">🌙</button>
+    </div>
+  </nav>
+  <div class="max-w-5xl mx-auto py-6 px-4">
+    <!-- Featured Project -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">🚀 Featured Project</h2>
+      <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white flex flex-col md:flex-row items-center gap-6">
+        <div class="flex-1">
+          <h3 class="text-2xl font-bold mb-2">SpaceX Falcon 9 Data Science</h3>
+          <p class="mb-2">Capstone project: Data wrangling, EDA, ML, SQL, and web scraping.</p>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-white/20 rounded px-2 py-1 text-xs">EDA</span>
+            <span class="bg-white/20 rounded px-2 py-1 text-xs">ML</span>
+            <span class="bg-white/20 rounded px-2 py-1 text-xs">SQL</span>
+            <span class="bg-white/20 rounded px-2 py-1 text-xs">Web Scraping</span>
+          </div>
+          <a href="./Capstone_Data_Science_SpaceY/spacex-falcon9-data-wrangling.ipynb.html" class="inline-block mt-2 px-4 py-2 bg-white text-blue-700 font-semibold rounded shadow hover:bg-gray-100 transition">View Project</a>
+        </div>
+        <img src="./Capstone_Data_Science_SpaceY/dash_high_pie.png" alt="SpaceX Project" class="w-40 h-40 object-contain rounded-lg border border-white/30 bg-white/10" />
+      </div>
+    </section>
+    <!-- Search Bar -->
+    <section class="mb-8">
+      <input type="text" id="search" placeholder="Search projects..." class="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800" onkeyup="filterProjects()">
+    </section>
+    <!-- Projects Grid -->
+    <section id="projects">
+      <h2 class="text-2xl font-semibold mb-6">All Projects</h2>
+      <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="./Capstone_StackOverflow_Survey/README.md" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">StackOverflow Survey</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Survey</span>
+            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Dashboard</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Capstone: Data collection, wrangling, visualization, dashboarding.</p>
+        </a>
+        <a href="./Data_Analysis/automobile-price-eda-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Automobile Price Analysis</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">EDA</span>
+            <span class="bg-purple-100 dark:bg-purple-900/40 rounded px-2 py-1 text-xs">Regression</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Comprehensive EDA and price modeling.</p>
+        </a>
+        <a href="./Data_Analysis/global-drinking-patterns-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Global Drinking Patterns</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">Analytics</span>
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Prediction</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Cross-cultural analytics and prediction.</p>
+        </a>
+        <a href="./Data_Analysis/king-county-house-sales-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">King County House Sales</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Real Estate</span>
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">EDA</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Real estate analytics and investment insights.</p>
+        </a>
+        <a href="./ML/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Machine Learning Projects</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-indigo-100 dark:bg-indigo-900/40 rounded px-2 py-1 text-xs">ML</span>
+            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Classification</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Classification, clustering, regression, and more.</p>
+        </a>
+        <a href="./NLP/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">NLP Projects</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">NLP</span>
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Text</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Text processing, embeddings, and advanced NLP.</p>
+        </a>
+        <a href="./Python/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Python Practice</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Practice</span>
+            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Notebooks</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Practice notebooks and Python experiments.</p>
+        </a>
+        <a href="./SQL/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">SQL Projects</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">SQL</span>
+            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Data</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">SQL analysis, queries, and data stories.</p>
+        </a>
+        <a href="./Visualization/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Visualization Projects</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">Visualization</span>
+            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Dashboards</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Dashboards, plots, and interactive visualizations.</p>
+        </a>
+        <a href="./Data_Analysis/PORTFOLIO_UPDATE_SUMMARY.md" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Portfolio Update Summary</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-gray-100 dark:bg-gray-900/40 rounded px-2 py-1 text-xs">Docs</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Changelog and documentation updates.</p>
+        </a>
+        <a href="./Data_Analysis/portfolio-index-navigator.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
+          <h3 class="font-bold text-xl mb-2">Project Index Navigator</h3>
+          <div class="flex gap-2 mb-2">
+            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Navigator</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Interactive notebook for portfolio navigation.</p>
+        </a>
+      </div>
+    </section>
+    <!-- About & Contact -->
+    <section id="about" class="mt-12 mb-8">
+      <h2 class="text-2xl font-semibold mb-4">About</h2>
+      <p class="mb-2">This portfolio is automatically updated and published using GitHub Actions and GitHub Pages. All notebooks are available as interactive HTML for easy browsing.</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">Last updated: June 13, 2025</p>
+    </section>
+    <section id="contact" class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Contact</h2>
+      <div class="flex gap-4">
+        <a href="mailto:your.email@example.com" class="text-blue-600 dark:text-blue-400 hover:underline">Email</a>
+        <a href="https://github.com/saayeeem" class="text-gray-700 dark:text-gray-200 hover:underline">GitHub</a>
+        <!-- Add more social/contact links as needed -->
+      </div>
+    </section>
+  </div>
+  <script>
+    // Simple search filter for projects
+    function filterProjects() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('#projectGrid > a');
+      cards.forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

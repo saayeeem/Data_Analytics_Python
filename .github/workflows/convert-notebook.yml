@@ -41,8 +41,8 @@ jobs:
           jupyter nbconvert --to html "$notebook" --output-dir=converted_html
         done
 
-    - name: Copy landing page to output
-      run: cp index.md converted_html/index.md
+    - name: Copy custom homepage to output
+      run: cp index.html converted_html/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
