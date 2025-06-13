@@ -3,173 +3,271 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Analytics Portfolio</title>
+  <title>Data Analytics Codebase Explorer</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Simple dark mode toggle
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : '');
+  <style>
+    html { scroll-behavior: smooth; }
+    .fade-in { animation: fadeIn 1s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .glass {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
     }
-    window.onload = function() {
-      if(localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
+    .folder-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
     }
-  </script>
+    .folder-card:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 32px 0 rgba(59,130,246,0.15);
+      border-color: #3b82f6;
+    }
+    .file-link {
+      transition: color 0.15s, padding-left 0.15s;
+    }
+    .file-link:hover {
+      color: #2563eb;
+      padding-left: 0.5rem;
+    }
+    .gradient-bg {
+      background: linear-gradient(90deg, #e0e7ff 0%, #f0fdfa 100%);
+    }
+    .dark .gradient-bg {
+      background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-  <!-- Sticky Navbar -->
-  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-gray-800/90 shadow flex items-center justify-between px-6 py-3 mb-8">
+<body class="gradient-bg dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 text-gray-900 dark:text-gray-100 min-h-screen">
+  <nav class="sticky top-0 z-50 glass dark:bg-gray-800/80 shadow flex items-center justify-between px-6 py-3 mb-8 rounded-b-xl">
     <div class="flex items-center gap-4">
-      <span class="font-bold text-xl">📊 Portfolio</span>
-      <a href="#projects" class="hover:underline">Projects</a>
-      <a href="#about" class="hover:underline">About</a>
-      <a href="#contact" class="hover:underline">Contact</a>
+      <span class="font-bold text-xl tracking-tight text-blue-700 dark:text-blue-300">Codebase Explorer</span>
+      <a href="#folders" class="hover:underline font-medium">Folders</a>
+      <a href="#files" class="hover:underline font-medium">Files</a>
+      <a href="#about" class="hover:underline font-medium">About</a>
     </div>
     <div class="flex items-center gap-4">
-      <button onclick="toggleDarkMode()" class="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">🌙</button>
+      <a href="resume.pdf" download class="px-3 py-1 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition text-sm shadow">CV</a>
+      <a href="https://github.com/saayeeem" aria-label="GitHub" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 text-2xl"><svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.0"/></svg></a>
     </div>
   </nav>
-  <div class="max-w-5xl mx-auto py-6 px-4">
-    <!-- Featured Project -->
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">🚀 Featured Project</h2>
-      <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white flex flex-col md:flex-row items-center gap-6">
-        <div class="flex-1">
-          <h3 class="text-2xl font-bold mb-2">SpaceX Falcon 9 Data Science</h3>
-          <p class="mb-2">Capstone project: Data wrangling, EDA, ML, SQL, and web scraping.</p>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-white/20 rounded px-2 py-1 text-xs">EDA</span>
-            <span class="bg-white/20 rounded px-2 py-1 text-xs">ML</span>
-            <span class="bg-white/20 rounded px-2 py-1 text-xs">SQL</span>
-            <span class="bg-white/20 rounded px-2 py-1 text-xs">Web Scraping</span>
-          </div>
-          <a href="./Capstone_Data_Science_SpaceY/spacex-falcon9-data-wrangling.ipynb.html" class="inline-block mt-2 px-4 py-2 bg-white text-blue-700 font-semibold rounded shadow hover:bg-gray-100 transition">View Project</a>
+  <main class="max-w-7xl mx-auto px-4 fade-in">
+    <section class="mb-12">
+      <h1 class="text-4xl font-extrabold mb-2 text-blue-800 dark:text-blue-200 drop-shadow">Data Analytics Codebase Explorer</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">Browse all projects, notebooks, scripts, and documentation in one place. Click any folder or file to explore the codebase.</p>
+    </section>
+    <section id="folders" class="mb-16">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 text-blue-700 dark:text-blue-300"><svg class="w-6 h-6 inline-block text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H19a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg> Folders</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Folder: Capstone_Data_Science_SpaceY -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">Capstone_Data_Science_SpaceY</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="Capstone_Data_Science_SpaceY/dash_high_pie.png" class="file-link">dash_high_pie.png</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/dash_pie.png" class="file-link">dash_pie.png</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/dataset-part-1.csv" class="file-link">dataset-part-1.csv</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/dataset-part-2.csv" class="file-link">dataset-part-2.csv</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/dataset-part-3.csv" class="file-link">dataset-part-3.csv</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/falcon9_data_wrangling_personal.ipynb" class="file-link">falcon9_data_wrangling_personal.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/jupyter-labs-eda-dataviz.ipynb.jupyterlite.ipynb" class="file-link">jupyter-labs-eda-dataviz.ipynb.jupyterlite.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/jupyter-labs-eda-sql-coursera_sqllite.ipynb" class="file-link">jupyter-labs-eda-sql-coursera_sqllite.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/labs-jupyter-spacex-Data%20wrangling.ipynb" class="file-link">labs-jupyter-spacex-Data wrangling.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/lab_jupyter_launch_site_location.ipynb" class="file-link">lab_jupyter_launch_site_location.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/my-data1.db" class="file-link">my-data1.db</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/README.md" class="file-link">README.md</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-data-collection-api.ipynb" class="file-link">spacex-falcon9-data-collection-api.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-data-wrangling-analysis.ipynb" class="file-link">spacex-falcon9-data-wrangling-analysis.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-data-wrangling.ipynb" class="file-link">spacex-falcon9-data-wrangling.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-eda-dataviz.ipynb" class="file-link">spacex-falcon9-eda-dataviz.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-sql-analysis.ipynb" class="file-link">spacex-falcon9-sql-analysis.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-falcon9-webscraping.ipynb" class="file-link">spacex-falcon9-webscraping.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-launch-dash.csv" class="file-link">spacex-launch-dash.csv</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-launch-dashboard-app.py" class="file-link">spacex-launch-dashboard-app.py</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-launch-site-location-analysis.ipynb" class="file-link">spacex-launch-site-location-analysis.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-machine-learning-prediction.ipynb" class="file-link">spacex-machine-learning-prediction.ipynb</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/spacex-web-scraped.csv" class="file-link">spacex-web-scraped.csv</a></li>
+            <li><a href="Capstone_Data_Science_SpaceY/SpaceX_Machine_Learning_Prediction_Part_5.jupyterlite.ipynb" class="file-link">SpaceX_Machine_Learning_Prediction_Part_5.jupyterlite.ipynb</a></li>
+          </ul>
         </div>
-        <img src="./Capstone_Data_Science_SpaceY/dash_high_pie.png" alt="SpaceX Project" class="w-40 h-40 object-contain rounded-lg border border-white/30 bg-white/10" />
+        <!-- Folder: Capstone_StackOverflow_Survey -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">Capstone_StackOverflow_Survey</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="Capstone_StackOverflow_Survey/capstone-story.pdf" class="file-link">capstone-story.pdf</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/data_analysis/" class="file-link">data_analysis/</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/data_collection/" class="file-link">data_collection/</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/data_dashboard/" class="file-link">data_dashboard/</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/data_visualization/" class="file-link">data_visualization/</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/data_wrangling/" class="file-link">data_wrangling/</a></li>
+            <li><a href="Capstone_StackOverflow_Survey/README.md" class="file-link">README.md</a></li>
+          </ul>
+        </div>
+        <!-- Folder: Data_Analysis -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">Data_Analysis</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="Data_Analysis/automobile-data-wrangling-cleaning.ipynb" class="file-link">automobile-data-wrangling-cleaning.ipynb</a></li>
+            <li><a href="Data_Analysis/automobile-dataset-cleaned.csv" class="file-link">automobile-dataset-cleaned.csv</a></li>
+            <li><a href="Data_Analysis/automobile-dataset-full-features.csv" class="file-link">automobile-dataset-full-features.csv</a></li>
+            <li><a href="Data_Analysis/automobile-dataset-preprocessed.csv" class="file-link">automobile-dataset-preprocessed.csv</a></li>
+            <li><a href="Data_Analysis/automobile-price-eda-analysis.ipynb" class="file-link">automobile-price-eda-analysis.ipynb</a></li>
+            <li><a href="Data_Analysis/car-price-model-development.ipynb" class="file-link">car-price-model-development.ipynb</a></li>
+            <li><a href="Data_Analysis/car-price-model-evaluation-refinement.ipynb" class="file-link">car-price-model-evaluation-refinement.ipynb</a></li>
+            <li><a href="Data_Analysis/data-analysis-introduction-fundamentals.ipynb" class="file-link">data-analysis-introduction-fundamentals.ipynb</a></li>
+            <li><a href="Data_Analysis/global-alcohol-consumption-data.csv" class="file-link">global-alcohol-consumption-data.csv</a></li>
+            <li><a href="Data_Analysis/global-drinking-patterns-analysis.ipynb" class="file-link">global-drinking-patterns-analysis.ipynb</a></li>
+            <li><a href="Data_Analysis/global-drinking-prediction-model.ipynb" class="file-link">global-drinking-prediction-model.ipynb</a></li>
+            <li><a href="Data_Analysis/king-county-house-sales-analysis.ipynb" class="file-link">king-county-house-sales-analysis.ipynb</a></li>
+            <li><a href="Data_Analysis/portfolio-index-navigator.ipynb" class="file-link">portfolio-index-navigator.ipynb</a></li>
+            <li><a href="Data_Analysis/PORTFOLIO_UPDATE_SUMMARY.md" class="file-link">PORTFOLIO_UPDATE_SUMMARY.md</a></li>
+            <li><a href="Data_Analysis/README.md" class="file-link">README.md</a></li>
+          </ul>
+        </div>
+        <!-- Folder: ML -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">ML</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="ML/Classification/" class="file-link">Classification/</a></li>
+            <li><a href="ML/Clustering/" class="file-link">Clustering/</a></li>
+            <li><a href="ML/data/" class="file-link">data/</a></li>
+            <li><a href="ML/notebook_metadata_template.md" class="file-link">notebook_metadata_template.md</a></li>
+            <li><a href="ML/README.md" class="file-link">README.md</a></li>
+            <li><a href="ML/Recommender%20Systems/" class="file-link">Recommender Systems/</a></li>
+            <li><a href="ML/Regression/" class="file-link">Regression/</a></li>
+            <li><a href="ML/requirements.txt" class="file-link">requirements.txt</a></li>
+            <li><a href="ML/The%20Best%20Classifier/" class="file-link">The Best Classifier/</a></li>
+          </ul>
+        </div>
+        <!-- Folder: NLP -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">NLP</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="NLP/01_Text_Preprocessing/" class="file-link">01_Text_Preprocessing/</a></li>
+            <li><a href="NLP/02_Basic_NLP_Concepts/" class="file-link">02_Basic_NLP_Concepts/</a></li>
+            <li><a href="NLP/03_Classification_Models/" class="file-link">03_Classification_Models/</a></li>
+            <li><a href="NLP/04_Word_Embeddings/" class="file-link">04_Word_Embeddings/</a></li>
+            <li><a href="NLP/05_Language_Models/" class="file-link">05_Language_Models/</a></li>
+            <li><a href="NLP/06_Advanced_Techniques/" class="file-link">06_Advanced_Techniques/</a></li>
+            <li><a href="NLP/07_Neural_Networks/" class="file-link">07_Neural_Networks/</a></li>
+            <li><a href="NLP/08_Sequence_Models/" class="file-link">08_Sequence_Models/</a></li>
+            <li><a href="NLP/09_Advanced_Projects/" class="file-link">09_Advanced_Projects/</a></li>
+            <li><a href="NLP/LEARNING_ROADMAP.md" class="file-link">LEARNING_ROADMAP.md</a></li>
+            <li><a href="NLP/Personal_Experiments/" class="file-link">Personal_Experiments/</a></li>
+            <li><a href="NLP/Progress_Notes/" class="file-link">Progress_Notes/</a></li>
+            <li><a href="NLP/Project_Gallery/" class="file-link">Project_Gallery/</a></li>
+            <li><a href="NLP/QUICK_REFERENCE.md" class="file-link">QUICK_REFERENCE.md</a></li>
+            <li><a href="NLP/README.md" class="file-link">README.md</a></li>
+            <li><a href="NLP/Utils_and_Resources/" class="file-link">Utils_and_Resources/</a></li>
+          </ul>
+        </div>
+        <!-- Folder: Python -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">Python</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="Python/API_2.ipynb" class="file-link">API_2.ipynb</a></li>
+            <li><a href="Python/Classes.ipynb" class="file-link">Classes.ipynb</a></li>
+            <li><a href="Python/Conditions.ipynb" class="file-link">Conditions.ipynb</a></li>
+            <li><a href="Python/Dictionaries.ipynb" class="file-link">Dictionaries.ipynb</a></li>
+            <li><a href="Python/example1.txt" class="file-link">example1.txt</a></li>
+            <li><a href="Python/Example2.txt" class="file-link">Example2.txt</a></li>
+            <li><a href="Python/Example3.txt" class="file-link">Example3.txt</a></li>
+            <li><a href="Python/ExcecptionHandling.ipynb" class="file-link">ExcecptionHandling.ipynb</a></li>
+            <li><a href="Python/Functions.ipynb" class="file-link">Functions.ipynb</a></li>
+            <li><a href="Python/Golden_State.pkl" class="file-link">Golden_State.pkl</a></li>
+            <li><a href="Python/image.png" class="file-link">image.png</a></li>
+            <li><a href="Python/index.html" class="file-link">index.html</a></li>
+            <li><a href="Python/Intro_API.ipynb" class="file-link">Intro_API.ipynb</a></li>
+            <li><a href="Python/Lists.ipynb" class="file-link">Lists.ipynb</a></li>
+            <li><a href="Python/LoadData.ipynb" class="file-link">LoadData.ipynb</a></li>
+            <li><a href="Python/Loops.ipynb" class="file-link">Loops.ipynb</a></li>
+            <li><a href="Python/Numpy1D.ipynb" class="file-link">Numpy1D.ipynb</a></li>
+            <li><a href="Python/Numpy2D.ipynb" class="file-link">Numpy2D.ipynb</a></li>
+            <li><a href="Python/PolynomialRegressionandPipelines.mp3" class="file-link">PolynomialRegressionandPipelines.mp3</a></li>
+            <li><a href="Python/ReadFile.ipynb" class="file-link">ReadFile.ipynb</a></li>
+            <li><a href="Python/README.md" class="file-link">README.md</a></li>
+            <li><a href="Python/Requests_HTTP.ipynb" class="file-link">Requests_HTTP.ipynb</a></li>
+            <li><a href="Python/Sets.ipynb" class="file-link">Sets.ipynb</a></li>
+            <li><a href="Python/Strings.ipynb" class="file-link">Strings.ipynb</a></li>
+            <li><a href="Python/Tuples.ipynb" class="file-link">Tuples.ipynb</a></li>
+            <li><a href="Python/Types.ipynb" class="file-link">Types.ipynb</a></li>
+            <li><a href="Python/US_Economic_Data_Dashboard.ipynb" class="file-link">US_Economic_Data_Dashboard.ipynb</a></li>
+            <li><a href="Python/Web%20Scrapping/" class="file-link">Web Scrapping/</a></li>
+            <li><a href="Python/WriteFile.ipynb" class="file-link">WriteFile.ipynb</a></li>
+          </ul>
+        </div>
+        <!-- Folder: SQL -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">SQL</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="SQL/ChicagoCensusData.csv" class="file-link">ChicagoCensusData.csv</a></li>
+            <li><a href="SQL/ChicagoCrimeData.csv" class="file-link">ChicagoCrimeData.csv</a></li>
+            <li><a href="SQL/ChicagoPublicSchools.csv" class="file-link">ChicagoPublicSchools.csv</a></li>
+            <li><a href="SQL/Chicago_Public_Schools__2011-2012_v3.csv" class="file-link">Chicago_Public_Schools__2011-2012_v3.csv</a></li>
+            <li><a href="SQL/Departments.csv" class="file-link">Departments.csv</a></li>
+            <li><a href="SQL/Employees.csv" class="file-link">Employees.csv</a></li>
+            <li><a href="SQL/Jobs.csv" class="file-link">Jobs.csv</a></li>
+            <li><a href="SQL/JobsHistory.csv" class="file-link">JobsHistory.csv</a></li>
+            <li><a href="SQL/Locations.csv" class="file-link">Locations.csv</a></li>
+            <li><a href="SQL/Sayem_ChicagoData_Analysis.ipynb" class="file-link">Sayem_ChicagoData_Analysis.ipynb</a></li>
+            <li><a href="SQL/Sayem_ChicagoSchools_SQLPractice.ipynb" class="file-link">Sayem_ChicagoSchools_SQLPractice.ipynb</a></li>
+            <li><a href="SQL/Sayem_Chicago_Data_Story.md" class="file-link">Sayem_Chicago_Data_Story.md</a></li>
+            <li><a href="SQL/Sayem_InstructorTable_SQLPractice.sql" class="file-link">Sayem_InstructorTable_SQLPractice.sql</a></li>
+            <li><a href="SQL/Sayem_PeerAssignment.ipynb" class="file-link">Sayem_PeerAssignment.ipynb</a></li>
+            <li><a href="SQL/Sayem_RealWorldData_SQL.ipynb" class="file-link">Sayem_RealWorldData_SQL.ipynb</a></li>
+            <li><a href="SQL/Sayem_SQLMagic_Tutorial.ipynb" class="file-link">Sayem_SQLMagic_Tutorial.ipynb</a></li>
+            <li><a href="SQL/Sayem_SQL_Analysis.ipynb" class="file-link">Sayem_SQL_Analysis.ipynb</a></li>
+            <li><a href="SQL/Sayem_SQL_Connecting.ipynb" class="file-link">Sayem_SQL_Connecting.ipynb</a></li>
+            <li><a href="SQL/Sayem_SQL_Querying.ipynb" class="file-link">Sayem_SQL_Querying.ipynb</a></li>
+          </ul>
+        </div>
+        <!-- Folder: Visualization -->
+        <div class="folder-card bg-white/90 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+          <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h3.28a2 2 0 011.42.59l1.42 1.42A2 2 0 0012.72 8H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg><span class="font-semibold text-lg">Visualization</span></div>
+          <ul class="pl-2 text-sm space-y-1">
+            <li><a href="Visualization/alice_mask.png" class="file-link">alice_mask.png</a></li>
+            <li><a href="Visualization/alice_novel.txt" class="file-link">alice_novel.txt</a></li>
+            <li><a href="Visualization/Area-Plots-Histograms-and-Bar-Charts-py-v2.0.ipynb" class="file-link">Area-Plots-Histograms-and-Bar-Charts-py-v2.0.ipynb</a></li>
+            <li><a href="Visualization/Dash_Basics.ipynb" class="file-link">Dash_Basics.ipynb</a></li>
+            <li><a href="Visualization/dash_basics.py" class="file-link">dash_basics.py</a></li>
+            <li><a href="Visualization/Dash_Interactivity.ipynb" class="file-link">Dash_Interactivity.ipynb</a></li>
+            <li><a href="Visualization/Flag-Canada.webp" class="file-link">Flag-Canada.webp</a></li>
+            <li><a href="Visualization/Flight_Delay_Time_Statistics_Dashboard.ipynb" class="file-link">Flight_Delay_Time_Statistics_Dashboard.ipynb</a></li>
+            <li><a href="Visualization/Generating-Maps-in-Python.ipynb" class="file-link">Generating-Maps-in-Python.ipynb</a></li>
+            <li><a href="Visualization/Introduction-to-Matplotlib-and-Line-Plots.ipynb" class="file-link">Introduction-to-Matplotlib-and-Line-Plots.ipynb</a></li>
+            <li><a href="Visualization/Pie-Charts-Box-Plots-Scatter-Plots-and-Bubble-Plots-py-v2.0.ipynb" class="file-link">Pie-Charts-Box-Plots-Scatter-Plots-and-Bubble-Plots-py-v2.0.ipynb</a></li>
+            <li><a href="Visualization/Plotly_Basics.ipynb" class="file-link">Plotly_Basics.ipynb</a></li>
+            <li><a href="Visualization/README.md" class="file-link">README.md</a></li>
+            <li><a href="Visualization/Sayem_Waffle_WordCloud_Regression.ipynb" class="file-link">Sayem_Waffle_WordCloud_Regression.ipynb</a></li>
+            <li><a href="Visualization/US_Domestic_Airline_Flights_Performance.ipynb" class="file-link">US_Domestic_Airline_Flights_Performance.ipynb</a></li>
+            <li><a href="Visualization/Waffle-Charts-Word-Clouds-and-Regression-Plots.ipynb" class="file-link">Waffle-Charts-Word-Clouds-and-Regression-Plots.ipynb</a></li>
+            <li><a href="Visualization/world_countries.json" class="file-link">world_countries.json</a></li>
+          </ul>
+        </div>
       </div>
     </section>
-    <!-- Search Bar -->
-    <section class="mb-8">
-      <input type="text" id="search" placeholder="Search projects..." class="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800" onkeyup="filterProjects()">
+    <section id="files" class="mb-16">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 text-green-700 dark:text-green-300"><svg class="w-6 h-6 inline-block text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10V6a5 5 0 0110 0v4M12 16v-4"/></svg> Top-level Files</h2>
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+        <li><a href="CODE_OF_CONDUCT.md" class="file-link">CODE_OF_CONDUCT.md</a></li>
+        <li><a href="CONTRIBUTING.md" class="file-link">CONTRIBUTING.md</a></li>
+        <li><a href="index.md" class="file-link">index.md</a></li>
+        <li><a href="LICENSE" class="file-link">LICENSE</a></li>
+        <li><a href="portfolio-index-navigator.ipynb" class="file-link">portfolio-index-navigator.ipynb</a></li>
+        <li><a href="PORTFOLIO_UPDATE_SUMMARY.md" class="file-link">PORTFOLIO_UPDATE_SUMMARY.md</a></li>
+        <li><a href="pyproject.toml" class="file-link">pyproject.toml</a></li>
+        <li><a href="README.md" class="file-link">README.md</a></li>
+        <li><a href="requirements.txt" class="file-link">requirements.txt</a></li>
+        <li><a href="SECURITY.md" class="file-link">SECURITY.md</a></li>
+        <li><a href="setup.cfg" class="file-link">setup.cfg</a></li>
+      </ul>
     </section>
-    <!-- Projects Grid -->
-    <section id="projects">
-      <h2 class="text-2xl font-semibold mb-6">All Projects</h2>
-      <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a href="./Capstone_StackOverflow_Survey/README.md" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">StackOverflow Survey</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Survey</span>
-            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Dashboard</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Capstone: Data collection, wrangling, visualization, dashboarding.</p>
-        </a>
-        <a href="./Data_Analysis/automobile-price-eda-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Automobile Price Analysis</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">EDA</span>
-            <span class="bg-purple-100 dark:bg-purple-900/40 rounded px-2 py-1 text-xs">Regression</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Comprehensive EDA and price modeling.</p>
-        </a>
-        <a href="./Data_Analysis/global-drinking-patterns-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Global Drinking Patterns</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">Analytics</span>
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Prediction</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Cross-cultural analytics and prediction.</p>
-        </a>
-        <a href="./Data_Analysis/king-county-house-sales-analysis.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">King County House Sales</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Real Estate</span>
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">EDA</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Real estate analytics and investment insights.</p>
-        </a>
-        <a href="./ML/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Machine Learning Projects</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-indigo-100 dark:bg-indigo-900/40 rounded px-2 py-1 text-xs">ML</span>
-            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Classification</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Classification, clustering, regression, and more.</p>
-        </a>
-        <a href="./NLP/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">NLP Projects</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">NLP</span>
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Text</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Text processing, embeddings, and advanced NLP.</p>
-        </a>
-        <a href="./Python/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Python Practice</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Practice</span>
-            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Notebooks</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Practice notebooks and Python experiments.</p>
-        </a>
-        <a href="./SQL/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">SQL Projects</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">SQL</span>
-            <span class="bg-green-100 dark:bg-green-900/40 rounded px-2 py-1 text-xs">Data</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">SQL analysis, queries, and data stories.</p>
-        </a>
-        <a href="./Visualization/" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Visualization Projects</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-pink-100 dark:bg-pink-900/40 rounded px-2 py-1 text-xs">Visualization</span>
-            <span class="bg-yellow-100 dark:bg-yellow-900/40 rounded px-2 py-1 text-xs">Dashboards</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Dashboards, plots, and interactive visualizations.</p>
-        </a>
-        <a href="./Data_Analysis/PORTFOLIO_UPDATE_SUMMARY.md" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Portfolio Update Summary</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-gray-100 dark:bg-gray-900/40 rounded px-2 py-1 text-xs">Docs</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Changelog and documentation updates.</p>
-        </a>
-        <a href="./Data_Analysis/portfolio-index-navigator.ipynb.html" class="block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg p-6 transition border border-gray-200 dark:border-gray-700">
-          <h3 class="font-bold text-xl mb-2">Project Index Navigator</h3>
-          <div class="flex gap-2 mb-2">
-            <span class="bg-blue-100 dark:bg-blue-900/40 rounded px-2 py-1 text-xs">Navigator</span>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300">Interactive notebook for portfolio navigation.</p>
-        </a>
-      </div>
+    <section id="about" class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">About</h2>
+      <p class="text-gray-600 dark:text-gray-300">This interactive explorer is designed for both academic and project audiences, making it easy to browse, search, and discover all code, notebooks, and documentation in this repository. Built with ❤️ and Tailwind CSS.</p>
     </section>
-    <!-- About & Contact -->
-    <section id="about" class="mt-12 mb-8">
-      <h2 class="text-2xl font-semibold mb-4">About</h2>
-      <p class="mb-2">This portfolio is automatically updated and published using GitHub Actions and GitHub Pages. All notebooks are available as interactive HTML for easy browsing.</p>
-      <p class="text-sm text-gray-500 dark:text-gray-400">Last updated: June 13, 2025</p>
-    </section>
-    <section id="contact" class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Contact</h2>
-      <div class="flex gap-4">
-        <a href="mailto:your.email@example.com" class="text-blue-600 dark:text-blue-400 hover:underline">Email</a>
-        <a href="https://github.com/saayeeem" class="text-gray-700 dark:text-gray-200 hover:underline">GitHub</a>
-        <!-- Add more social/contact links as needed -->
-      </div>
-    </section>
-  </div>
-  <script>
-    // Simple search filter for projects
-    function filterProjects() {
-      const input = document.getElementById('search').value.toLowerCase();
-      const cards = document.querySelectorAll('#projectGrid > a');
-      cards.forEach(card => {
-        card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
-      });
-    }
-  </script>
+  </main>
+  <footer class="text-center text-xs text-gray-500 dark:text-gray-400 py-6 border-t border-gray-200 dark:border-gray-700 mt-12">
+    &copy; 2025 Data Analytics Portfolio. All rights reserved.
+  </footer>
 </body>
 </html>
