@@ -2,6 +2,8 @@
 
 **By Mohammad Sayem Chowdhury**
 
+🌐 **Live Portfolio**: [https://saayeeem.github.io/Data_Analytics_Python/](https://saayeeem.github.io/Data_Analytics_Python/)
+
 Welcome to my comprehensive data analytics and machine learning portfolio! This repository showcases my journey and expertise in data science, featuring projects spanning data analysis, machine learning, natural language processing, and data visualization using Python.
 
 ## 🚀 Overview
